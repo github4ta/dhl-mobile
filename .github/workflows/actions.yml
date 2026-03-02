@@ -1,0 +1,38 @@
+name: Mobile Tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    # Важно: ubuntu-latest поддерживает KVM для эмуляторов Android
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven' # или 'gradle'
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"\' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Setup Appium
+        run: |
+          npm install -g appium
+          appium driver install uiautomator2
+
+      - name: Run Android Emulator and Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          target: google_apis
+          arch: x86_64
+          # Здесь запускается команда теста (Maven или Gradle)
+          script: mvn clean test
