@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -18,10 +19,11 @@ public class HomeTest {
     @BeforeEach
     public void setUp() throws MalformedURLException {
         // Настройка параметров (Capabilities) для подключения к устройству
+        String appPath = new File("src/test/resources/login-demo-app.apk").getAbsolutePath();
         UiAutomator2Options options = new UiAutomator2Options()
                 .setPlatformName("Android")
                 .setDeviceName("emulator-5554")
-                .setApp("C:\\Apps\\login-demo-app.apk")
+                .setApp(appPath)
                 .setAutomationName("UiAutomator2");
 
         // Инициализация драйвера и подключение к Appium Server
