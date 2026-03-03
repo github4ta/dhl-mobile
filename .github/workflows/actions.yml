@@ -34,5 +34,9 @@ jobs:
           api-level: 29
           target: google_apis
           arch: x86_64
-          # Здесь запускается команда теста (Maven или Gradle)
-          script: mvn clean test
+            # 1. Запускаем Appium сервер в фоновом режиме
+            appium --log appium.log &
+            # 2. Ждем несколько секунд, чтобы сервер успел подняться
+            sleep 10            
+            # 3. Запускаем ваши тесты
+            mvn clean test
