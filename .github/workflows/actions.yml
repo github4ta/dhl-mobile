@@ -30,11 +30,13 @@ jobs:
       - name: Run Android Emulator and Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 29
-          target: google_apis
-          arch: x86_64
+          api-level: 28
+          target: default
+          arch: x86
+          profile: Nexus 6
+          disable-animations: true
           # Добавлен символ '|' и исправлены отступы ниже:
           script: |
             appium --log appium.log &
-            sleep 15
+            sleep 20
             mvn clean test

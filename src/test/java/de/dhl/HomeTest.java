@@ -29,16 +29,19 @@ public class HomeTest {
                 .setApp(appPath)
                 .setAutomationName("UiAutomator2");
 
-        // Таймауты для CI
-        // Общий таймаут на установку вашего приложения (APK)
-        options.setCapability("appium:androidInstallTimeout", 120000);
-        // Время ожидания готовности эмулятора после запуска
-        options.setCapability("appium:deviceReadyTimeout", 120000);
+        // Ультра-таймауты для GitHub Actions
+        options.setCapability("appium:uiautomator2ServerLaunchTimeout", 180000); // 3 минуты
+        options.setCapability("appium:uiautomator2ServerInstallTimeout", 180000);
+        options.setCapability("appium:androidInstallTimeout", 180000);
+        options.setCapability("appium:adbExecTimeout", 120000);
+        options.setCapability("appium:deviceReadyTimeout", 180000);
+
+        // Отключаем лишние проверки при запуске
+        options.setCapability("appium:skipServerInstallation", false);
+        options.setCapability("appium:noSign", true); // Не переподписывать APK (ускоряет запуск)
+
         // Если приложение тяжелое, даем больше времени на парсинг манифеста
         options.setCapability("appium:appWaitDuration", 60000);
-        options.setCapability("appium:uiautomator2ServerInstallTimeout", 90000);
-        options.setCapability("appium:uiautomator2ServerLaunchTimeout", 90000);
-        options.setCapability("appium:adbExecTimeout", 60000);
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/"), options);
     }
