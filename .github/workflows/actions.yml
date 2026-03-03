@@ -3,7 +3,6 @@ on: [push, pull_request]
 
 jobs:
   test:
-    # Важно: ubuntu-latest поддерживает KVM для эмуляторов Android
     runs-on: ubuntu-latest
 
     steps:
@@ -15,7 +14,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: 'maven' # или 'gradle'
+          cache: 'maven'
 
       - name: Enable KVM
         run: |
@@ -34,9 +33,8 @@ jobs:
           api-level: 29
           target: google_apis
           arch: x86_64
-            # 1. Запускаем Appium сервер в фоновом режиме
+          # Добавлен символ '|' и исправлены отступы ниже:
+          script: |
             appium --log appium.log &
-            # 2. Ждем несколько секунд, чтобы сервер успел подняться
-            sleep 10            
-            # 3. Запускаем ваши тесты
+            sleep 15
             mvn clean test
