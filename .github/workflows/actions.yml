@@ -30,9 +30,9 @@ jobs:
       - name: Run Android Emulator and Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 28
-          target: default
-          arch: x86
+          api-level: 30
+          target: google_apis
+          arch: x86_64
           profile: Nexus 6
           disable-animations: true
           # Добавлен символ '|' и исправлены отступы ниже:
