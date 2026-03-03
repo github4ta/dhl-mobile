@@ -30,6 +30,12 @@ public class HomeTest {
                 .setAutomationName("UiAutomator2");
 
         // Таймауты для CI
+        // Общий таймаут на установку вашего приложения (APK)
+        options.setCapability("appium:androidInstallTimeout", 120000);
+        // Время ожидания готовности эмулятора после запуска
+        options.setCapability("appium:deviceReadyTimeout", 120000);
+        // Если приложение тяжелое, даем больше времени на парсинг манифеста
+        options.setCapability("appium:appWaitDuration", 60000);
         options.setCapability("appium:uiautomator2ServerInstallTimeout", 90000);
         options.setCapability("appium:uiautomator2ServerLaunchTimeout", 90000);
         options.setCapability("appium:adbExecTimeout", 60000);
